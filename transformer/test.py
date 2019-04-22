@@ -109,7 +109,7 @@ if __name__ == '__main__':
     with tf.Session(graph=g.graph) as sess:
             g.init.run()
 			saver = tf.train.Saver()
-            saver.restore(sess, '/pan/word2vec/amazon/model_global_step_225000')
+            saver.restore(sess, 'location of model')
             X,Y = load_train_data_test(hp.test_data)
 			for step in tqdm(range(num_batch), total=num_batch, ncols=70, leave=False, unit='b'):
                 gs = gs+1
