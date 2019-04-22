@@ -113,7 +113,7 @@ if __name__ == '__main__':
 		varialbes = tf.contrib.framework.get_variables_to_restore()
 		variables_to_restore = [v for v in varialbes if 'encoder' in v.name.split('/')]
 		saver_1 = tf.train.Saver(variables_to_restore)
-		saver_1.restore(sess,'/root/pan/transformer/model_global_step_1515000')	
+		saver_1.restore(sess,'location of model')	
 		for epoch in range(1, hp.num_epochs+1):
 			for file_name in os.listdir(hp.source_train):
 				X,Y = load_train_data_2(file_name)

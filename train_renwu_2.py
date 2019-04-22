@@ -161,6 +161,10 @@ if __name__ == '__main__':
 	gs = 0
     with tf.Session() as sess:
 	    g.init.run()
+		varialbes = tf.contrib.framework.get_variables_to_restore()
+		variables_to_restore = [v for v in varialbes if 'encoder' in v.name.split('/')]
+		saver_1 = tf.train.Saver(variables_to_restore)
+		saver_1.restore(sess,'location of model')
 		for epoch in range(1, hp.num_epochs+1):
 			for file_name in os.listdir(hp.source_train):
 				X,Y = load_train_data_next_sentence(file_name)
