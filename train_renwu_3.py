@@ -134,7 +134,7 @@ class Graph():
 
             # Final linear projection
             
-            self.logits = tf.layers.dense(self.dec, len(en2idx))
+            self.logits = tf.layers.dense(self.dec, self.vocab_size)
             self.preds = tf.to_int32(tf.arg_max(self.logits, dimension=-1))
             self.istarget = tf.to_float(tf.not_equal(self.y, 0))
 
@@ -161,7 +161,6 @@ if __name__ == '__main__':
 	gs = 0
     with tf.Session() as sess:
 	    g.init.run()
-        g.init.run()
 		varialbes = tf.contrib.framework.get_variables_to_restore()
 		variables_to_restore = [v for v in varialbes if 'encoder' in v.name.split('/')]
 		saver_1 = tf.train.Saver(variables_to_restore)
