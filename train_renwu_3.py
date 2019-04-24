@@ -140,6 +140,16 @@ class Graph():
 
             if is_training:
                 # Loss
+                #self.logits = tf.reshape(self.dec,[-1,hp.hidden_units])
+			    #self.y = tf.reshape(self.y,[-1])
+			    #self.istarget= tf.reshape(self.istarget,[-1])
+                #self.loss = tf.nn.nce_loss(
+                #				   weights = self.nce_weight,  
+                #				   biases = self.nce_biases,   
+                #				   labels = self.y, 
+                #				   inputs = self.logits,            
+                #				   num_sampled = 5, 
+                #				   num_classes = self.vocab_size))
                 self.y_smoothed = label_smoothing(tf.one_hot(self.y, depth=self.vocab_size))
                 self.loss = tf.nn.softmax_cross_entropy_with_logits(logits=self.logits, labels=self.y_smoothed)
                 self.mean_loss = tf.reduce_sum(self.loss*self.istarget) / (tf.reduce_sum(self.istarget))

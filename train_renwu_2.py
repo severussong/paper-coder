@@ -137,9 +137,23 @@ class Graph():
             self.logits = tf.layers.dense(self.dec, self.vocab_size)
             self.preds = tf.to_int32(tf.arg_max(self.logits, dimension=-1))
             self.istarget = tf.to_float(tf.not_equal(self.y, 0))
-
+            #self.nce_weight = tf.Variable(tf.truncated_normal([self.vocab_size, hp.hidden_units],
+            #						                                        stddev=1.0/math.sqrt(hp.hidden_units)))
+            #self.nce_biases = tf.Variable(tf.zeros([self.vocab_size]))
+			
             if is_training:
                 # Loss
+                #self.logits = tf.reshape(self.dec,[-1,hp.hidden_units])
+			    #self.y = tf.reshape(self.y,[-1])
+			    #self.istarget= tf.reshape(self.istarget,[-1])
+                #self.loss = tf.nn.nce_loss(
+                #				   weights = self.nce_weight,  
+                #				   biases = self.nce_biases,   
+                #				   labels = self.y, 
+                #				   inputs = self.logits,            
+                #				   num_sampled = 5, 
+                #				   num_classes = self.vocab_size))
+	
                 self.y_smoothed = label_smoothing(tf.one_hot(self.y, depth=self.vocab_size))
                 self.loss = tf.nn.softmax_cross_entropy_with_logits(logits=self.logits, labels=self.y_smoothed)
                 self.mean_loss = tf.reduce_sum(self.loss*self.istarget) / (tf.reduce_sum(self.istarget))
